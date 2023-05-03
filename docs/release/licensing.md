@@ -10,6 +10,7 @@ The table is ordered to follow ROCm's manifest file.
 <!-- spellcheck-disable -->
 | Component                                                                                        | License                                                                                                                    |
 |:------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
+| [EULA](https://www.amd.com/en/support/linux-eula)                                                | [EULA]
 | [ROCK-Kernel-Driver](https://github.com/RadeonOpenCompute/ROCK-Kernel-Driver/)                   | [GPL 2.0 WITH Linux-syscall-note](https://github.com/RadeonOpenCompute/ROCK-Kernel-Driver/blob/master/COPYING)             |
 | [ROCT-Thunk-Interface](https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface/)               | [MIT](https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface/blob/master/LICENSE.md)                                    |
 | [ROCR-Runtime](https://github.com/RadeonOpenCompute/ROCR-Runtime/)                               | [The University of Illinois/NCSA](https://github.com/RadeonOpenCompute/ROCR-Runtime/blob/master/LICENSE.txt)               |
