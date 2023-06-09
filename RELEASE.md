@@ -15,93 +15,10 @@ The release notes for the ROCm platform.
 
 -------------------
 
-## ROCm 5.4.0
+## ROCm 5.3.0
 <!-- markdownlint-disable first-line-h1 -->
 <!-- markdownlint-disable no-duplicate-header -->
 ### What's New in This Release
-
-#### HIP Enhancements
-
-The ROCm v5.4 release consists of the following HIP enhancements:
-
-##### Support for Wall Clock64
-
-A new timer function wall_clock64() is supported, which returns wall clock count at a constant frequency on the device.
-
-```h
-long long int wall_clock64();
-```
-
-It returns wall clock count at a constant frequency on the device, which can be queried via HIP API with the hipDeviceAttributeWallClockRate attribute of the device in the HIP application code.
-
-Example:
-
-```h
-int wallClkRate = 0; //in kilohertz
-+HIPCHECK(hipDeviceGetAttribute(&wallClkRate, hipDeviceAttributeWallClockRate, deviceId));
-```
-
-Where hipDeviceAttributeWallClockRate is a device attribute.
-
-> **Note**
->
-> The wall clock frequency is a per-device attribute.
-
-##### New Registry Added for GPU_MAX_HW_QUEUES
-
-The GPU_MAX_HW_QUEUES registry defines the maximum number of independent hardware queues allocated per process per device.
-
-The environment variable controls how many independent hardware queues HIP runtime can create per process, per device. If the application allocates more HIP streams than this number, then the HIP runtime reuses the same hardware queues for the new streams in a round-robin manner.
-
-> **Note**
->
-> This maximum number does not apply to hardware queues created for CU-masked HIP streams or cooperative queues for HIP Cooperative Groups (there is only one queue per device).
-
-For more details, refer to the HIP Programming Guide.
-
-#### New HIP APIs in This Release
-
-The following new HIP APIs are available in the ROCm v5.4 release.
-
-> **Note**
->
-> This is a pre-official version (beta) release of the new APIs.
-
-##### Error Handling
-
-```h
-hipError_t hipDrvGetErrorName(hipError_t hipError, const char** errorString);
-```
-
-This returns HIP errors in the text string format.
-
-```h
-hipError_t hipDrvGetErrorString(hipError_t hipError, const char** errorString);
-```
-
-This returns text string messages with more details about the error.
-
-For more information, refer to the HIP API Guide.
-
-##### HIP Tests Source Separation
-
-With ROCm v5.4, a separate GitHub project is created at
-
-<https://github.com/ROCm-Developer-Tools/hip-tests>
-
-This contains HIP catch2 tests and samples, and new tests will continue to develop.
-
-In future ROCm releases, catch2 tests and samples will be removed from the HIP project.
-
-### OpenMP Enhancements
-
-This release consists of the following OpenMP enhancements:
-
-- Enable new device RTL in libomptarget as default.
-- New flag `-fopenmp-target-fast` to imply `-fopenmp-target-ignore-env-vars -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism`.
-- Support for the collapse clause and non-unit stride in cases where the No-Loop specialized kernel is generated.
-- Initial implementation of optimized cross-team sum reduction for float and double type scalars.
-- Pool-based optimization in the OpenMP runtime to reduce locking during data transfer.
 
 ### Deprecations and Warnings
 
@@ -113,9 +30,7 @@ The `hipcc` and `hipconfig` Perl scripts are deprecated. In a future release, co
 >
 > There will be a transition period where the Perl scripts and compiled binaries are available  before the scripts are removed. There will be no functional difference between the Perl scripts and their compiled binary counterpart. No user action is required. Once these are available, users can optionally switch to `hipcc.bin` and `hipconfig.bin`. The `hipcc`/`hipconfig` soft link will be assimilated to point from `hipcc`/`hipconfig` to the respective compiled binaries as the default option.
 
-(5_4_0_filesystem_reorg_deprecation_notice)=
-
-##### Linux Filesystem Hierarchy Standard for ROCm
+#### Linux Filesystem Hierarchy Standard for ROCm
 
 ROCm packages have adopted the Linux foundation filesystem hierarchy standard in this release to ensure ROCm components follow open source conventions for Linux-based distributions. While moving to a new filesystem hierarchy, ROCm ensures backward compatibility with its 5.1 version or older filesystem hierarchy. See below for a detailed explanation of the new filesystem hierarchy and backward compatibility.
 
@@ -213,33 +128,52 @@ lrwxrwxrwx 1 root root 42 May 10 23:32 hip-config.cmake -> ../../../../lib/cmake
 
 The following defects are fixed in this release.
 
-These defects were identified and documented as known issues in previous ROCm releases and are fixed in this release.
+These defects were identified and documented as known issues in previous ROCm releases and are fixed in the ROCm v5.3 release.
 
-#### Memory Allocated Using hipHostMalloc() with Flags Did Not Exhibit Fine-Grain Behavior
+#### Kernel produces incorrect results with ROCm 5.2
 
-##### Issue
+User code did not initialize certain data constructs, leading to a correctness issue. A strict reading of the C++ standard suggests that failing to initialize these data constructs is undefined behavior. However, a special case was added for a specific compiler builtin to handle the uninitialized data in a defined manner.
 
-The test was incorrectly using the `hipDeviceAttributePageableMemoryAccess` device attribute to determine coherent support.
+The compiler fix consists of the following patches:
 
-##### Fix
+- A new `noundef` attribute is added. This attribute denotes when a function call argument or return val may never contain uninitialized bits.
+For more information, see <https://reviews.llvm.org/D81678>
+- The application of this attribute was refined such that it was not added to a specific compiler builtin where the compiler knows that inactive lanes do not impact program execution.
 
-`hipHostMalloc()` allocates memory with fine-grained access by default when the environment variable `HIP_HOST_COHERENT=1` is used.
+For more information, see <https://github.com/RadeonOpenCompute/llvm-project/commit/accf36c58409268ca1f216cdf5ad812ba97ceccd>.
 
-For more information, refer to {doc}`hip:.doxygen/docBin/html/index`.
+### Known Issues
 
+This section consists of known issues in this release.
 
-#### SoftHang with `hipStreamWithCUMask` test on AMD Instinct™
+#### Issue with OpenMP-Extras Package Upgrade
 
-##### Issue
+The `openmp-extras` package has been split into runtime (`openmp-extras-runtime`) and dev (`openmp-extras-devel`) packages. This change has broken the upgrade support for the `openmp-extras` package in RHEL/SLES.
+An available workaround in RHEL is to use the following command for upgrades:
 
-On GFX10 GPUs, kernel execution hangs when it is launched on streams created using `hipStreamWithCUMask`.
+```sh
+sudo yum upgrade rocm-language-runtime --allowerasing
 
-##### Fix
+```
 
-On GFX10 GPUs, each workgroup processor encompasses two compute units, and the compute units must be enabled as a pair. The `hipStreamWithCUMask` API unit test cases are updated to set compute unit mask (cuMask) in pairs for GFX10 GPUs.
+An available workaround in SLES is to use the following command for upgrades:
 
-#### ROCm Tools GPU IDs
+```sh
+zypper update --force-resolution <meta-package>
+```
 
-The HIP language device IDs are not the same as the GPU IDs reported by the tools. GPU IDs are globally unique and guaranteed to be consistent across APIs and processes.
+#### AMD Instinct™ MI200 SRIOV Virtualization Issue
 
-GPU IDs reported by ROCTracer and ROCProfiler or ROCm Tools are HSA Driver Node ID of that GPU, as it is a unique ID for that device in that particular node.
+There is a known issue in this ROCm v5.3 release with all AMD Instinct™ MI200 devices running within a virtual function (VF) under SRIOV virtualization. This issue will likely impact the functionality of SRIOV-based workloads, but does not impact Discrete Device Assignment (DDA) or Bare Metal.
+
+Until a fix is provided, users should rely on ROCm v5.2.3 to support their SRIOV workloads.
+
+#### System Crash when IMMOU is Enabled
+
+If IOMMU is enabled in SBIOS and ROCm is installed, the system may report the following failure or errors when running workloads such as bandwidth test, clinfo, and HelloWord.cl and cause a system crash.
+
+- IO PAGE FAULT
+- IRQ remapping does not support X2APIC mode
+- NMI error
+
+Workaround: To avoid the system crash, add `amd_iommu=on iommu=pt` as the kernel bootparam, as indicated in the warning message.
