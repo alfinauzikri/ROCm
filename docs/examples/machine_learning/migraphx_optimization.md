@@ -300,39 +300,3 @@ iterator : 9
 Inference complete
 Inference time: 0.004ms
 ```
-
-### YModel
-
-The best inference performance through MIGraphX is conditioned upon having tuned kernel configurations stored in a `/home` local User Database (DB). If a user were to move their model to a different server or allow a different user to use it, they would have to run through the MIOpen tuning process again to populate the next User DB with the best kernel configurations and corresponding solvers.
-
-Tuning is time consuming, and if the users have not performed tuning, they would see discrepancies between expected or claimed inference performance and actual inference performance. This has led to repetitive and time-consuming tuning tasks for each user.
-
-MIGraphX introduces a feature, known as YModel, that stores the kernel config parameters found during tuning into a `.mxr` file. This ensures the same level of expected performance, even when a model is copied to a different user/system.
-
-The YModel feature is available starting from ROCm 5.4.1 and UIF 1.1.
-
-#### YModel Example
-
-Through the `migraphx-driver` functionality, you can generate `.mxr` files with tuning information stored inside it by passing additional `--binary --output model.mxr` to `migraphx-driver` along with the rest of the necessary flags.
-
-For example, to generate `.mxr` file from the ONNX model, use the following:
-
-```bash
-./path/to/migraphx-driver compile --onnx resnet50.onnx --enable-offload-copy --binary --output resnet50.mxr
-```
-
-To run generated `.mxr` files through `migraphx-driver`, use the following:
-
-```bash
-./path/to/migraphx-driver run --migraphx resnet50.mxr --enable-offload-copy
-```
-
-Alternatively, you can use MIGraphX's C++ or Python API to generate `.mxr` file. Refer to {numref}`image018` for an example.
-
-```{figure} ../../data/understand/deep_learning/image.018.png
-:name: image018
----
-align: center
----
-Generating a `.mxr` File
-```
