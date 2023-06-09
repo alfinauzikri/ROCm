@@ -40,7 +40,7 @@ should increase with a newer release.
 _Release version_ - It shows the ROCm release version when the package was
 released.
 
-**Example:** `50400` points to the ROCm 5.4.0 release.
+**Example:** `50300` points to the ROCm 5.3.0 release.
 
 _Build id_ - It represents the Jenkins build number for that release.
 
