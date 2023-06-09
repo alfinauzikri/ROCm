@@ -23,7 +23,7 @@ installed version, refer to the [](install) page.
 :sync: ubuntu-20.04
 
 ```shell
-echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/rocm-keyring.gpg] https://repo.radeon.com/amdgpu/5.5.1/ubuntu focal main' | sudo tee /etc/apt/sources.list.d/amdgpu.list
+echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/rocm-keyring.gpg] https://repo.radeon.com/amdgpu/5.4/ubuntu focal main' | sudo tee /etc/apt/sources.list.d/amdgpu.list
 sudo apt update
 ```
 
@@ -32,7 +32,7 @@ sudo apt update
 :sync: ubuntu-22.04
 
 ```shell
-echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/rocm-keyring.gpg] https://repo.radeon.com/amdgpu/5.5.1/ubuntu jammy main' | sudo tee /etc/apt/sources.list.d/amdgpu.list
+echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/rocm-keyring.gpg] https://repo.radeon.com/amdgpu/5.4/ubuntu jammy main' | sudo tee /etc/apt/sources.list.d/amdgpu.list
 sudo apt update
 ```
 
@@ -55,7 +55,7 @@ sudo reboot
 :sync: ubuntu-20.04
 
 ```shell
-echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/rocm-keyring.gpg] https://repo.radeon.com/rocm/apt/5.5.1 focal main" | sudo tee /etc/apt/sources.list.d/rocm.list
+echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/rocm-keyring.gpg] https://repo.radeon.com/rocm/apt/5.4 focal main" | sudo tee /etc/apt/sources.list.d/rocm.list
 echo -e 'Package: *\nPin: release o=repo.radeon.com\nPin-Priority: 600' | sudo tee /etc/apt/preferences.d/rocm-pin-600
 sudo apt update
 ```
@@ -65,7 +65,7 @@ sudo apt update
 :sync: ubuntu-22.04
 
 ```shell
-echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/rocm-keyring.gpg] https://repo.radeon.com/rocm/apt/5.5.1 jammy main" | sudo tee /etc/apt/sources.list.d/rocm.list
+echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/rocm-keyring.gpg] https://repo.radeon.com/rocm/apt/5.4 jammy main" | sudo tee /etc/apt/sources.list.d/rocm.list
 echo -e 'Package: *\nPin: release o=repo.radeon.com\nPin-Priority: 600' | sudo tee /etc/apt/preferences.d/rocm-pin-600
 sudo apt update
 ```
@@ -97,7 +97,7 @@ sudo apt install --only-upgrade rocm-hip-sdk
 sudo tee --append /etc/yum.repos.d/amdgpu.repo <<EOF
 [amdgpu]
 Name=amdgpu
-baseurl=https://repo.radeon.com/amdgpu/5.5.1/rhel/8.6/main/x86_64/
+baseurl=https://repo.radeon.com/amdgpu/5.4/rhel/8.6/main/x86_64/
 enabled=1
 priority=50
 gpgcheck=1
@@ -115,7 +115,7 @@ sudo yum clean all
 sudo tee --append /etc/yum.repos.d/amdgpu.repo <<EOF
 [amdgpu]
 Name=amdgpu
-baseurl=https://repo.radeon.com/amdgpu/5.5.1/rhel/8.7/main/x86_64/
+baseurl=https://repo.radeon.com/amdgpu/5.4/rhel/8.7/main/x86_64/
 enabled=1
 priority=50
 gpgcheck=1
@@ -133,7 +133,7 @@ sudo yum clean all
 sudo tee --append /etc/yum.repos.d/amdgpu.repo <<EOF
 [amdgpu]
 Name=amdgpu
-baseurl=https://repo.radeon.com/amdgpu/5.5.1/rhel/9.2/main/x86_64/
+baseurl=https://repo.radeon.com/amdgpu/5.4/rhel/9.2/main/x86_64/
 enabled=1
 priority=50
 gpgcheck=1
@@ -163,7 +163,7 @@ sudo reboot
 sudo tee --append /etc/yum.repos.d/rocm.repo <<EOF
 [ROCm-5.4.3]
 Name=ROCm5.4.3
-baseurl=https://repo.radeon.com/rocm/5.5.1/main
+baseurl=https://repo.radeon.com/rocm/5.4/main
 enabled=1
 priority=50
 gpgcheck=1
@@ -193,7 +193,7 @@ sudo apt install --only-upgrade rocm-hip-sdk
 sudo tee --append /etc/zypp/repos.d/amdgpu.repo <<EOF
 [amdgpu]
 name=amdgpu
-baseurl=https://repo.radeon.com/amdgpu/5.5.1/sle/15.4/main/x86_64
+baseurl=https://repo.radeon.com/amdgpu/5.4/sle/15.4/main/x86_64
 enabled=1
 gpgcheck=1
 gpgkey=https://repo.radeon.com/rocm/rocm.gpg.key
@@ -218,7 +218,7 @@ sudo reboot
 ```shell
 sudo tee --append /etc/zypp/repos.d/rocm.repo <<EOF
 name=rocm
-baseurl=https://repo.radeon.com/amdgpu/5.5.1/sle/15.4/main/x86_64
+baseurl=https://repo.radeon.com/amdgpu/5.4/sle/15.4/main/x86_64
 enabled=1
 gpgcheck=1
 gpgkey=https://repo.radeon.com/rocm/rocm.gpg.key

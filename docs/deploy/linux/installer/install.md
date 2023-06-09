@@ -18,8 +18,8 @@ following commands based on your distribution.
 
 ```shell
 sudo apt update
-wget https://repo.radeon.com/amdgpu-install/5.5.1/ubuntu/focal/amdgpu-install_5.5.50501-1_all.deb
-sudo apt install ./amdgpu-install_5.5.50501-1_all.deb
+wget https://repo.radeon.com/amdgpu-install/5.4/ubuntu/focal/amdgpu-install_5.4.50400-1_all.deb
+sudo apt install ./amdgpu-install_5.4.50400-1_all.deb
 ```
 
 :::
@@ -28,8 +28,8 @@ sudo apt install ./amdgpu-install_5.5.50501-1_all.deb
 
 ```shell
 sudo apt update
-wget https://repo.radeon.com/amdgpu-install/5.5.1/ubuntu/jammy/amdgpu-install_5.5.50501-1_all.deb
-sudo apt install ./amdgpu-install_5.5.50501-1_all.deb
+wget https://repo.radeon.com/amdgpu-install/5.4/ubuntu/jammy/amdgpu-install_5.4.50400-1_all.deb
+sudo apt install ./amdgpu-install_5.4.50501-1_all.deb
 ```
 
 :::
@@ -43,7 +43,7 @@ sudo apt install ./amdgpu-install_5.5.50501-1_all.deb
 :sync: RHEL-8.6
 
 ```shell
-sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/8.6/amdgpu-install-5.5.50501-1.el8.noarch.rpm
+sudo yum install https://repo.radeon.com/amdgpu-install/5.4/rhel/8.6/amdgpu-install-5.4.50400-1.el8.noarch.rpm
 ```
 
 :::
@@ -51,7 +51,7 @@ sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/8.6/amdgpu-in
 :sync: RHEL-8.7
 
 ```shell
-sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/8.7/amdgpu-install-5.5.50501-1.el8.noarch.rpm
+sudo yum install https://repo.radeon.com/amdgpu-install/5.4/rhel/8.7/amdgpu-install-5.4.50400-1.el8.noarch.rpm
 ```
 
 :::
@@ -59,7 +59,7 @@ sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/8.7/amdgpu-in
 :sync: RHEL-8.8
 
 ```shell
-sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/8.8/amdgpu-install-5.5.50501-1.el8.noarch.rpm
+sudo yum install https://repo.radeon.com/amdgpu-install/5.4/rhel/8.8/amdgpu-install-5.4.50400-1.el8.noarch.rpm
 ```
 
 :::
@@ -67,7 +67,7 @@ sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/8.8/amdgpu-in
 :sync: RHEL-9.1
 
 ```shell
-sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/9.1/amdgpu-install-5.5.50501-1.el8.noarch.rpm
+sudo yum install https://repo.radeon.com/amdgpu-install/5.4/rhel/9.1/amdgpu-install-5.4.50400-1.el8.noarch.rpm
 ```
 
 :::
@@ -75,7 +75,7 @@ sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/9.1/amdgpu-in
 :sync: RHEL-9.2
 
 ```shell
-sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/9.2/amdgpu-install-5.5.50501-1.el8.noarch.rpm
+sudo yum install https://repo.radeon.com/amdgpu-install/5.4/rhel/9.2/amdgpu-install-5.4.5040-1.el8.noarch.rpm
 ```
 
 :::
@@ -89,7 +89,7 @@ sudo yum install https://repo.radeon.com/amdgpu-install/5.5.1/rhel/9.2/amdgpu-in
 :sync: SLES15-SP4
 
 ```shell
-sudo zypper --no-gpg-checks install https://repo.radeon.com/amdgpu-install/5.5.1/sle/15.4/amdgpu-install-5.5.50501-1.noarch.rpm
+sudo zypper --no-gpg-checks install https://repo.radeon.com/amdgpu-install/5.4/sle/15.4/amdgpu-install-5.4.50400-1.noarch.rpm
 ```
 
 :::
@@ -168,9 +168,9 @@ the installer script will install packages in the single-version layout.
 For the multi-version ROCm installation you must use the installer script from
 the latest release of ROCm that you wish to install.
 
-**Example:** If you want to install ROCm releases 5.3.3 and 5.5.1
+**Example:** If you want to install ROCm releases 5.3.3 and 5.4.1
 simultaneously, you are required to download the installer from the latest ROCm
-release v5.5.1.
+release v5.4.
 
 ```{attention}
 ROCm packages that were previously installed from a single-version installation
@@ -266,12 +266,12 @@ sudo amdgpu-install --usecase=rocm --rocmrelease=<release-number-3>
 ```
 
 Following are examples of ROCm multi-version installation. The kernel-mode
-driver, associated with the ROCm release v5.5.1, will be installed as its latest
+driver, associated with the ROCm release v5.4, will be installed as its latest
 release in the list.
 
 ```none
 sudo amdgpu-install --usecase=rocm --rocmrelease=5.3.3
-sudo amdgpu-install --usecase=rocm --rocmrelease=5.5.1
+sudo amdgpu-install --usecase=rocm --rocmrelease=5.4
 ```
 
 ## Additional options
